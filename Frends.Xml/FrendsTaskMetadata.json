@@ -1,0 +1,16 @@
+﻿{
+  "Tasks": [
+    {
+      "TaskMethod": "Frends.Xml.Xml.XpathQuery"
+    },
+    {
+      "TaskMethod": "Frends.Xml.Xml.XpathQuerySingle"
+    },
+    {
+      "TaskMethod": "Frends.Xml.Xml.Transform"
+    },
+    {
+      "TaskMethod": "Frends.Xml.Xml.Validate"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>Frends.Xml</id>
+    <version>1.0.0.0</version>
+    <title>FRENDS Xml tasks</title>
+    <authors>HiQ Finland</authors>
+    <owners />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>FRENDS Xml tasks</description>
+    <summary />
+    <dependencies>
+	    <dependency id="Frends.Tasks.Attributes" version="1.2.0" />
+      <dependency id="Newtonsoft.Json" version="6.0.8" />
+      <dependency id="Saxon-HE" version="[9.7.0.14]" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" />
+      <frameworkAssembly assemblyName="System.Data" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+	<file src="Frends.Xml\bin\Release\Frends.Xml.dll" target="lib\net452\Frends.Xml.dll" />	
+    <file src="Frends.Xml\bin\Release\Frends.Xml.XML" target="Frends.Xml.XML"/>
+    <file src="Frends.Xml\FrendsTaskMetadata.json" target="FrendsTaskMetadata.json"/>
+  </files>
+</package>
