@@ -19,7 +19,7 @@ namespace Frends.Xml
     public class Xml
     {
         /// <summary>
-        /// Query XML with XPath and return a list of results. See: https://bitbucket.org/hiqfinland/frends.xml
+        /// Query XML with XPath and return a list of results. See: https://github.com/FrendsPlatform/Frends.Xml
         /// </summary>
         /// <returns>Object { List &lt;object&gt; Data, List&lt;JToken&gt; ToJson(),JToken ToJson(int index) }</returns>
         public static QueryResults XpathQuery([CustomDisplay(DisplayOption.Tab)]QueryInput input, [CustomDisplay(DisplayOption.Tab)]QueryOptions options)
@@ -36,7 +36,7 @@ namespace Frends.Xml
         }
 
         /// <summary>
-        /// Query XML with XPath and return a single result. See: https://bitbucket.org/hiqfinland/frends.xml
+        /// Query XML with XPath and return a single result. See: https://github.com/FrendsPlatform/Frends.Xml
         /// </summary>
         /// <returns>Object { object Data, JToken ToJson() } </returns>
         public static QuerySingleResults XpathQuerySingle([CustomDisplay(DisplayOption.Tab)]QueryInput input, [CustomDisplay(DisplayOption.Tab)]QueryOptions options)
@@ -54,7 +54,7 @@ namespace Frends.Xml
         }
 
         /// <summary>
-        /// Create a XSLT transformation. See: https://bitbucket.org/hiqfinland/frends.xml
+        /// Create a XSLT transformation. See: https://github.com/FrendsPlatform/Frends.Xml
         /// </summary>
         /// <returns>string</returns>
         public static string Transform(TransformInput input)
@@ -85,7 +85,7 @@ namespace Frends.Xml
         }
 
         /// <summary>
-        /// Validate XML against XML Schema Definitions. See: https://bitbucket.org/hiqfinland/frends.xml
+        /// Validate XML against XML Schema Definitions. See: https://github.com/FrendsPlatform/Frends.Xml
         /// </summary>
         /// <returns>Object { bool IsValid, string Error } </returns>
         public static ValidateResult Validate([CustomDisplay(DisplayOption.Tab)]ValidationInput input, [CustomDisplay(DisplayOption.Tab)]ValidationOptions options)
