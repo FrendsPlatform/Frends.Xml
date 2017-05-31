@@ -47,22 +47,22 @@ namespace Frends.Xml
     {
         private readonly List<XdmItem> _xdmItems;
         private readonly Lazy<List<object>> _data;
-        private readonly Lazy<List<JToken>> _jTokens;
+        private readonly Lazy<List<object>> _jTokens;
         public QueryResults(IEnumerable<XdmItem> data)
         {
             _xdmItems = data.ToList();
             _data = new Lazy<List<object>>(() => _xdmItems.Select(Extensions.GetXmlOrAtomicObject).ToList());
-            _jTokens = new Lazy<List<JToken>>(() =>  _xdmItems.Select(Extensions.GetJTokenFromXdmItem).ToList());
+            _jTokens = new Lazy<List<object>>(() =>  _xdmItems.Select(Extensions.GetJTokenFromXdmItem).ToList());
         }
 
         public List<object> Data => _data.Value;
 
-        public List<JToken> ToJson()
+        public List<object> ToJson()
         {
             return _jTokens.Value;
         }
 
-        public JToken ToJson(int index)
+        public object ToJson(int index)
         {
             return _jTokens.IsValueCreated ? _jTokens.Value[index] : Extensions.GetJTokenFromXdmItem(_xdmItems[index]);
         }
@@ -71,19 +71,19 @@ namespace Frends.Xml
     public class QuerySingleResults
     {
         private readonly XdmItem _xdmItem;
-        private readonly Lazy<JToken> _jToken;
+        private readonly Lazy<object> _jToken;
         private readonly Lazy<object> _data;
 
         public QuerySingleResults(XdmItem item)
         {
             _xdmItem = item;
             _data = new Lazy<object>(() =>  _xdmItem != null ? Extensions.GetXmlOrAtomicObject(_xdmItem) : null);
-            _jToken = new Lazy<JToken>(() => _xdmItem != null ? Extensions.GetJTokenFromXdmItem(_xdmItem): null);
+            _jToken = new Lazy<object>(() => _xdmItem != null ? Extensions.GetJTokenFromXdmItem(_xdmItem): null);
         }
 
         public object Data => _data.Value;
 
-        public JToken ToJson()
+        public object ToJson()
         {
             return _jToken.Value;
         }
@@ -96,7 +96,7 @@ namespace Frends.Xml
 
     public static class Extensions
     {
-        public static JToken GetJTokenFromXdmItem(XdmItem xdmItem)
+        public static object GetJTokenFromXdmItem(XdmItem xdmItem)
         {
             var xdmAtomicValue = xdmItem as XdmAtomicValue;
             if (xdmAtomicValue != null)

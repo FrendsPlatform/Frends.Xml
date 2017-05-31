@@ -67,7 +67,7 @@ namespace Frends.Xml.Tests
             var res = Frends.Xml.Xml.XpathQuerySingle(new QueryInput() {Xml = Xml, XpathQuery = xPath }, new QueryOptions());
             
             Assert.That(res.Data, Is.EqualTo("8.99"));
-            var jTokenRes = res.ToJson();
+            var jTokenRes = res.ToJson() as JToken;
             Assert.That(jTokenRes.Value<string>(), Is.EqualTo("8.99"));
         }
 
@@ -78,7 +78,7 @@ namespace Frends.Xml.Tests
             var res = Frends.Xml.Xml.XpathQuerySingle(new QueryInput() { Xml = Xml, XpathQuery = xPath }, new QueryOptions());
 
             Assert.That(res.Data, Is.EqualTo("<price>8.99</price>"));
-            var jTokenRes = res.ToJson();
+            var jTokenRes = res.ToJson() as JToken;
             Assert.That(jTokenRes["price"].Value<string>(), Is.EqualTo("8.99"));
         }
 
@@ -90,8 +90,8 @@ namespace Frends.Xml.Tests
 
             Assert.That(res.Data[0], Is.EqualTo("8.99"));
             var jTokenRes = res.ToJson();
-            Assert.That(jTokenRes[1].Value<string>(), Is.EqualTo("11.99"));
-            Assert.That(jTokenRes[2].Value<string>(), Is.EqualTo("9.99"));
+            Assert.That(jTokenRes[1].ToString(), Is.EqualTo("11.99"));
+            Assert.That(jTokenRes[2].ToString(), Is.EqualTo("9.99"));
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Frends.Xml.Tests
             var res = Frends.Xml.Xml.XpathQuery(new QueryInput() { Xml = Xml, XpathQuery = xPath }, new QueryOptions());
             var jTokenRes = res.ToJson();
             Assert.That(res.Data[0], Is.EqualTo(8.99d));
-            Assert.That(jTokenRes[0].Value<double>(), Is.EqualTo(8.99d));
+            Assert.That(((JToken)jTokenRes[0]).Value<double>(), Is.EqualTo(8.99d));
         }
 
         [Test]
@@ -112,8 +112,8 @@ namespace Frends.Xml.Tests
             var res = Frends.Xml.Xml.XpathQuery(new QueryInput() { Xml = Xml, XpathQuery = xPath }, new QueryOptions());
             var jTokenRes = res.ToJson();        
             Assert.That(res.Data[0], Is.EqualTo("<price>8.99</price>"));
-            Assert.That(jTokenRes[1]["price"].Value<string>(), Is.EqualTo("11.99"));
-            Assert.That(jTokenRes[2]["price"].Value<string>(), Is.EqualTo("9.99"));
+            Assert.That(((JToken)jTokenRes[1])["price"].Value<string>(), Is.EqualTo("11.99"));
+            Assert.That(((JToken)jTokenRes[2])["price"].Value<string>(), Is.EqualTo("9.99"));
         }
 
         //TODO: Add test for XsltTransformParameters
