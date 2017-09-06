@@ -11,6 +11,9 @@
     },
     {
       "TaskMethod": "Frends.Xml.Xml.Validate"
+    },
+    {
+      "TaskMethod": "Frends.Xml.Xml.ConvertJsonToXml"
     }
   ]
 }
