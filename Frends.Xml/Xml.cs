@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using System.Xml.XPath;
 using Frends.Tasks.Attributes;
-using Newtonsoft.Json.Linq;
 using Saxon.Api;
+using Newtonsoft.Json;
 #pragma warning disable 1591
 
 namespace Frends.Xml
@@ -105,6 +102,15 @@ namespace Frends.Xml
             }
 
             throw new InvalidDataException("The input data was not recognized as XML. Supported formats are XML string and XMLDocument.");
+        }
+
+        /// <summary>
+        /// Convert JSON string to XML string. See: https://github.com/FrendsPlatform/Frends.Xml
+        /// </summary>
+        /// <returns>string</returns>
+        public static string ConvertJsonToXml(JsonToXmlInput input)
+        {
+            return JsonConvert.DeserializeXmlNode(input.Json, input.XmlRootElementName).OuterXml;
         }
 
         private static ValidateResult ValidateXmlDocument(XmlDocument xmlDocument, IEnumerable<string> inputXsdSchemas, ValidationOptions options)

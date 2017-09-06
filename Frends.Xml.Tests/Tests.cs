@@ -194,5 +194,32 @@ namespace Frends.Xml.Tests
             var result = Frends.Xml.Xml.Validate(new ValidationInput() { Xml = simpleXml, XsdSchemas = new[] { SimpleXsd } }, new ValidationOptions());
             Assert.That(result.IsValid, Is.True);
         }
+
+        [Test]
+        public void ConvertJsonToXmlString()
+        {
+            const string json = @"{
+              '?xml': {
+               '@version': '1.0',
+               '@standalone': 'no'
+               },
+               'root': {
+                 'person': [
+                   {
+                     '@id': '1',
+                    'name': 'Alan',
+                    'url': 'http://www.google.com'
+                  },
+                  {
+                    '@id': '2',
+                    'name': 'Louis',
+                    'url': 'http://www.yahoo.com'
+                  }
+                ]
+              }
+            }";
+          var result = Frends.Xml.Xml.ConvertJsonToXml(new JsonToXmlInput() {Json = json});
+          Assert.That(result, Does.Contain("<url>http://www.google.com</url>"));
+        }
     }
 }

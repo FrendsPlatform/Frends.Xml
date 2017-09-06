@@ -167,4 +167,19 @@ namespace Frends.Xml
         public bool IsValid { get; set; }
         public string Error { get; set; }
     }
+
+    /// <summary>
+    /// Input for converting JSON to XML
+    /// </summary>
+    public class JsonToXmlInput
+    {
+        /// <summary>
+        /// Json string to be converted to XML
+        /// </summary>
+        public string Json { get; set; }
+        /// <summary>
+        /// The name for the root XML element
+        /// </summary>
+        public string XmlRootElementName { get; set; }
+    }
 }

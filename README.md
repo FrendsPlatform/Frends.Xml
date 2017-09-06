@@ -18,6 +18,9 @@
        - [Input](#input)
        - [Options](#options)
        - [Result](#result)
+     - [Xml.ConvertJsonToXml](#xml.convertjsontoxml)
+       - [Input](#input)
+       - [Result](#result)
    - [License](#license)
    
 # Frends.Xml
@@ -127,29 +130,56 @@ Create a XSLT transformation.
 #### Result
 string
 
-### Xml.Validate
+### Xml.ConvertJsonToXml
 
-Validate XML against XML Schema Definitions
+This task takes JSON text and deserializes it into an xml text.
+Because valid XML must have one root element, the JSON passed to the task should have one property in the root JSON object. If the root JSON object has multiple properties, then the XmlRootElementName should be used. A root element with that name will be inserted into the XML text.
 
+Example input json: 
+```json
+@"{
+  '?xml': {
+    '@version': '1.0',
+    '@standalone': 'no'
+  },
+  'root': {
+    'person': [
+      {
+        '@id': '1',
+        'name': 'Alan'
+      },
+      {
+        '@id': '2',
+        'name': 'Louis'
+      }
+    ]
+  }
+"
+````
+
+Example result:
+```xml
+<?xml version="1.0" standalone="no"?>
+ <root>
+   <person id="1">
+     <name>Alan</name>
+   </person>
+   <person id="2">
+     <name>Louis</name>
+   </person>
+</root>
+```
 #### Input
 
 | Property        | Type      | Description                                  |
 |-----------------|-----------|----------------------------------------------|
-| Xml             | dynamic   | Input must be of type string or XmlDocument  |
-| XsdSchemas      | string[]  | List of XML Schema Definitions  |
+| Json             | string   | Json string to be converted to XML  |
+| XmlRootElementName      | string  | The name for the root XML element |
 
-#### Options
-
-| Property                | Type           | Description                                       |
-|-------------------------|----------------|---------------------------------------------------|
-| ThrowOnValidationErrors | bool           |                                                   | 
 
 #### Result
 
-| Property          | Type     | Description                       |
-|-------------------|----------|-----------------------------------|
-| IsValid           | bool     | Indicates if xml is valid or not. |
-| Error             | string   | If IsValid is false this field contains the error message otherwise it is empty |
+string
 
 ## License
 
