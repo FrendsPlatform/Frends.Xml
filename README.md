@@ -3,24 +3,11 @@
    - [Building](#building)
    - [Contributing](#contributing)
    - [Documentation](#documentation)
-     - [Xml.XpathQuery](#xml.xpathquery)
-       - [Input](#input)
-       - [Options](#options)
-       - [Result](#result)
-     - [Xml.XpathQuerySingle](#xml.xpathquerysingle)
-       - [Input](#input)
-       - [Options](#options)
-       - [Result](#result)
-     - [Xml.Transform](#xml.transform)
-       - [Input](#input)
-       - [Result](#result)
-     - [Xml.Validate](#xml.validate)
-       - [Input](#input)
-       - [Options](#options)
-       - [Result](#result)
-     - [Xml.ConvertJsonToXml](#xml.convertjsontoxml)
-       - [Input](#input)
-       - [Result](#result)
+     - [Xml.XpathQuery](#xmlxpathquery) 
+     - [Xml.XpathQuerySingle](#xmlxpathquerysingle)
+     - [Xml.Transform](#xmltransform)
+     - [Xml.Validate](#xmlvalidate)
+     - [Xml.ConvertJsonToXml](#xmlconvertjsontoxml)
    - [License](#license)
    
 # Frends.Xml
@@ -31,8 +18,6 @@ You can install the task via FRENDS UI Task view or you can find the nuget packa
 `https://www.myget.org/F/frends/api/v2`
 
 ## Building
-Ensure that you have `https://www.myget.org/F/frends/api/v2` added to your nuget feeds
-
 Clone a copy of the repo
 
 `git clone https://github.com/FrendsPlatform/Frends.Xml.git`
