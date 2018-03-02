@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using Frends.Tasks.Attributes;
 using Saxon.Api;
 using Newtonsoft.Json;
 #pragma warning disable 1591
@@ -19,27 +19,27 @@ namespace Frends.Xml
         /// Query XML with XPath and return a list of results. See: https://github.com/FrendsPlatform/Frends.Xml
         /// </summary>
         /// <returns>Object { List &lt;object&gt; Data, List&lt;JToken&gt; ToJson(),JToken ToJson(int index) }</returns>
-        public static QueryResults XpathQuery([CustomDisplay(DisplayOption.Tab)]QueryInput input, [CustomDisplay(DisplayOption.Tab)]QueryOptions options)
+        public static QueryResults XpathQuery([PropertyTab]QueryInput input, [PropertyTab]QueryOptions options)
         {
             var xPathSelector = SetupXPathSelector(input, options);
             var result = xPathSelector.Evaluate().GetList().Cast<XdmItem>();
-         
+
             if (options.ThrowErrorOnEmptyResults && !result.Any())
             {
                 throw new NullReferenceException($"Could not find any nodes with XPath: {input.XpathQuery}");
             }
-          
-            return new QueryResults(result); 
+
+            return new QueryResults(result);
         }
 
         /// <summary>
         /// Query XML with XPath and return a single result. See: https://github.com/FrendsPlatform/Frends.Xml
         /// </summary>
         /// <returns>Object { object Data, JToken ToJson() } </returns>
-        public static QuerySingleResults XpathQuerySingle([CustomDisplay(DisplayOption.Tab)]QueryInput input, [CustomDisplay(DisplayOption.Tab)]QueryOptions options)
+        public static QuerySingleResults XpathQuerySingle([PropertyTab]QueryInput input, [PropertyTab]QueryOptions options)
         {
             var xPathSelector = SetupXPathSelector(input, options);
-         
+
             var result = xPathSelector.EvaluateSingle();
 
             if (options.ThrowErrorOnEmptyResults && result == null)
@@ -85,7 +85,7 @@ namespace Frends.Xml
         /// Validate XML against XML Schema Definitions. See: https://github.com/FrendsPlatform/Frends.Xml
         /// </summary>
         /// <returns>Object { bool IsValid, string Error } </returns>
-        public static ValidateResult Validate([CustomDisplay(DisplayOption.Tab)]ValidationInput input, [CustomDisplay(DisplayOption.Tab)]ValidationOptions options)
+        public static ValidateResult Validate([PropertyTab]ValidationInput input, [PropertyTab]ValidationOptions options)
         {
             var s = input.Xml as string;
             if (s != null)
@@ -125,7 +125,7 @@ namespace Frends.Xml
             {
                 schemas.Add(null, XmlReader.Create(new StringReader(schema), settings));
             }
-          
+
             XDocument.Load(new XmlNodeReader(xmlDocument)).Validate(schemas, (o, e) =>
             {
 
@@ -139,13 +139,13 @@ namespace Frends.Xml
 
             return validateResult;
         }
-        
+
         private static XPathSelector SetupXPathSelector(QueryInput input, QueryOptions options)
         {
             var proc = new Processor();
             var builder = proc.NewDocumentBuilder();
             builder.SchemaValidationMode = SchemaValidationMode.Lax;
-            
+
             var xPathCompiler = proc.NewXPathCompiler();
 
             switch (options.XpathVersion)
