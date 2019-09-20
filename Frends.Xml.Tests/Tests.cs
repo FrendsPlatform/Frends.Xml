@@ -4,6 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Frends.Xml.Tests
 {
@@ -132,9 +133,27 @@ namespace Frends.Xml.Tests
                                     <DIV>from <I><xsl:value-of select="".""/></I></DIV>
                                   </xsl:template>
                                 </xsl:stylesheet>";
-                
-           var res = Frends.Xml.Xml.Transform(new TransformInput() {Xml = transformXml, Xslt = xslt});
-           Assert.That(res,Is.EqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>Hello, World!<DIV>from <I>An XSLT Programmer</I></DIV>"));
+
+            var res = Frends.Xml.Xml.Transform(new TransformInput() { Xml = transformXml, Xslt = xslt });
+            Assert.That(res, Is.EqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>Hello, World!<DIV>from <I>An XSLT Programmer</I></DIV>"));
+        }
+
+
+        [Test]
+        public void TestXsltTransformWithNonUTF8Declaration()
+        {
+            const string transformXml = @"<?xml version=""1.0"" encoding=""Windows-1252"" ?><in>Ä</in>";
+
+            const string xslt = @"<?xml version=""1.0""?>
+                                <xsl:stylesheet xmlns:xsl=""http://www.w3.org/1999/XSL/Transform"" version=""2.0"">
+                                <xsl:output method=""xml"" />
+                                  <xsl:template match=""/in"">
+                                       <out><xsl:value-of select="".""/></out>
+                                  </xsl:template>
+                                </xsl:stylesheet>";
+
+            var res = Frends.Xml.Xml.Transform(new TransformInput() { Xml = transformXml, Xslt = xslt });
+            Assert.That(res, Is.EqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?><out>Ä</out>"));
         }
 
         [Test]
