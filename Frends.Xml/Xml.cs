@@ -71,6 +71,7 @@ namespace Frends.Xml
                     XmlDocument xmldoc = new XmlDocument();
                     xmldoc.LoadXml(input.Xml);
                     xmldoc.Save(inputStream);
+                    xmldoc = null;
                     inputStream.Position = 0;
                     transformer.SetInputStream(inputStream, new Uri("file://"));
 
