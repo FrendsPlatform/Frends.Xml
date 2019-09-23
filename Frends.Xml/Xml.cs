@@ -63,9 +63,18 @@ namespace Frends.Xml
             {
                 var executable = compiler.Compile(stringReader);
                 var transformer = executable.Load();
-                using (var inputStream = new MemoryStream(Encoding.UTF8.GetBytes(input.Xml)))
+
+                
+                using (var inputStream = new MemoryStream())
                 {
+                    //XmlDocument always produces MemoryStream where its encoding matches the input XML's declaration
+                    XmlDocument xmldoc = new XmlDocument();
+                    xmldoc.LoadXml(input.Xml);
+                    xmldoc.Save(inputStream);
+                    xmldoc = null;
+                    inputStream.Position = 0;
                     transformer.SetInputStream(inputStream, new Uri("file://"));
+
                     input.XsltParameters?.ToList().ForEach(x => transformer.SetParameter(new QName(x.Name), new XdmAtomicValue(x.Value)));
 
                     using (var stringWriter = new StringWriter())

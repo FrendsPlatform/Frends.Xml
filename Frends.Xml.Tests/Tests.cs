@@ -115,8 +115,7 @@ namespace Frends.Xml.Tests
             Assert.That(((JToken)jTokenRes[1])["price"].Value<string>(), Is.EqualTo("11.99"));
             Assert.That(((JToken)jTokenRes[2])["price"].Value<string>(), Is.EqualTo("9.99"));
         }
-
-        //TODO: Add test for XsltTransformParameters
+        
         [Test]
         public void TestXsltTransform()
         {
@@ -132,9 +131,61 @@ namespace Frends.Xml.Tests
                                     <DIV>from <I><xsl:value-of select="".""/></I></DIV>
                                   </xsl:template>
                                 </xsl:stylesheet>";
-                
-           var res = Frends.Xml.Xml.Transform(new TransformInput() {Xml = transformXml, Xslt = xslt});
-           Assert.That(res,Is.EqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>Hello, World!<DIV>from <I>An XSLT Programmer</I></DIV>"));
+
+            var res = Frends.Xml.Xml.Transform(new TransformInput() { Xml = transformXml, Xslt = xslt });
+            Assert.That(res, Is.EqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?>Hello, World!<DIV>from <I>An XSLT Programmer</I></DIV>"));
+        }
+
+        [Test]
+        public void TestXsltTransformWithNonUTF8Declaration()
+        {
+            const string transformXml = @"<?xml version=""1.0"" encoding=""Windows-1252"" ?><in>Ä</in>";
+
+            const string xslt = @"<?xml version=""1.0""?>
+                                <xsl:stylesheet xmlns:xsl=""http://www.w3.org/1999/XSL/Transform"" version=""2.0"">
+                                <xsl:output method=""xml"" />
+                                  <xsl:template match=""/in"">
+                                       <out><xsl:value-of select="".""/></out>
+                                  </xsl:template>
+                                </xsl:stylesheet>";
+
+            var res = Frends.Xml.Xml.Transform(new TransformInput() { Xml = transformXml, Xslt = xslt });
+            Assert.That(res, Is.EqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?><out>Ä</out>"));
+        }
+
+        [Test]
+        public void TestXsltTransformWithWhiteSpaces()
+        {
+            string transformXml = String.Format(@"<?xml version=""1.0"" encoding=""utf-8"" ?><in>foo  {0}{0}bar</in>", Environment.NewLine);
+
+            const string xslt = @"<?xml version=""1.0""?>
+                                <xsl:stylesheet xmlns:xsl=""http://www.w3.org/1999/XSL/Transform"" version=""2.0"">
+                                <xsl:output method=""xml"" />
+                                  <xsl:template match=""/in"">
+                                       <out><xsl:value-of select="".""/></out>
+                                  </xsl:template>
+                                </xsl:stylesheet>";
+
+            var res = Frends.Xml.Xml.Transform(new TransformInput() { Xml = transformXml, Xslt = xslt });
+            Assert.That(res, Is.EqualTo(String.Format("<?xml version=\"1.0\" encoding=\"UTF-8\"?><out>foo  {0}{0}bar</out>", Environment.NewLine)));
+        }
+
+        [Test]
+        public void TestXsltTransformWithParams()
+        {
+            string transformXml = String.Format(@"<?xml version=""1.0"" encoding=""UTF-8"" ?><in />", Environment.NewLine);
+
+            const string xslt = @"<?xml version=""1.0""?>
+                                <xsl:stylesheet xmlns:xsl=""http://www.w3.org/1999/XSL/Transform"" version=""2.0"">
+                                <xsl:output method=""xml"" />
+                                <xsl:param name=""param"" />
+                                  <xsl:template match=""/in"">
+                                       <out><xsl:value-of select=""$param""/></out>
+                                  </xsl:template>
+                                </xsl:stylesheet>";
+
+            var res = Frends.Xml.Xml.Transform(new TransformInput() { Xml = transformXml, Xslt = xslt, XsltParameters = new XsltParameters[] { new XsltParameters { Name = "param" , Value = "foo" } } });
+            Assert.That(res, Is.EqualTo("<?xml version=\"1.0\" encoding=\"UTF-8\"?><out>foo</out>"));
         }
 
         [Test]
