@@ -69,6 +69,7 @@ namespace Frends.Xml
                 {
                     //XmlDocument always produces MemoryStream where its encoding matches the input XML's declaration
                     XmlDocument xmldoc = new XmlDocument();
+                    xmldoc.PreserveWhitespace = true;
                     xmldoc.LoadXml(input.Xml);
                     xmldoc.Save(inputStream);
                     xmldoc = null;
