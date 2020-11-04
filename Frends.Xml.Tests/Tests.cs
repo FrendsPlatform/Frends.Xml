@@ -272,5 +272,18 @@ namespace Frends.Xml.Tests
           var result = Frends.Xml.Xml.ConvertJsonToXml(new JsonToXmlInput() {Json = json});
           Assert.That(result, Does.Contain("<url>http://www.google.com</url>"));
         }
+
+        [Test]
+        public void WhiteSpaceIsPreserved()
+        {
+            const string transformXml = @"<?xml version=""1.0""?>
+                                <test></test>";
+
+            const string xslt = @"<?xml version=""1.0""?>
+                                <xsl:stylesheet xmlns:xsl=""http://www.w3.org/1999/XSL/Transform"" version=""2.0"" />";
+
+            var res = Frends.Xml.Xml.Transform(new TransformInput() { Xml = transformXml, Xslt = xslt });
+            Assert.That(res, Is.EqualTo(@"<?xml version=""1.0"" encoding=""UTF-8""?>")); // no newline caused by empty tag
+        }
     }
 }
