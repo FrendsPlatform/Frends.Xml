@@ -80,7 +80,7 @@ namespace Frends.Xml
 
                     using (var stringWriter = new StringWriter())
                     {
-                        var serializer = new Serializer();
+                        var serializer = processor.NewSerializer();
                         serializer.SetOutputWriter(stringWriter);
                         transformer.Run(serializer);
                         var output = stringWriter.GetStringBuilder().ToString();
