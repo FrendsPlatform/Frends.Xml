@@ -11,7 +11,7 @@
     <summary />
     <dependencies>
       <dependency id="Newtonsoft.Json" version="6.0.8" />
-      <dependency id="Saxon-HE" version="[9.7.0.14]" />
+      <dependency id="Saxon-HE" version="[10.3.0]" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" />
