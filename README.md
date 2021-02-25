@@ -125,6 +125,19 @@ Validate XML against XML Schema Definitions.
 | Xml             | string   | XML to validate                  | 
 | XsdSchemas      | string[] | List of XML Schema Definitions   |
 
+#### Options
+
+| Property                 | Type             | Description                          |
+|--------------------------|------------------|--------------------------------------|
+| ThrowOnValidationErrors  | bool             | Throw exception on validation error. |
+
+#### Result
+
+| Property   | Type   | Description              |
+|------------|--------|--------------------------|
+| IsValid    | bool   | Is the Xml valid or not  |
+| Error      | string | Validation error message |
+
 Example input Xml: 
 ```xml
 <?xml version="1.0"?>
@@ -187,19 +200,6 @@ would return:
 IsValid: false
 Error: The 'publish_date' element is invalid - The value '2002-09-24-9:00' is invalid according to its datatype 'http://www.w3.org/2001/XMLSchema:date' - The string '2002-09-24-9:00' is not a valid Date value.
 ``` 
-
-#### Options
-
-| Property                 | Type             | Description                          |
-|--------------------------|------------------|--------------------------------------|
-| ThrowOnValidationErrors  | bool             | Throw exception on validation error. |
-
-#### Result
-
-| Property   | Type   | Description              |
-|------------|--------|--------------------------|
-| IsValid    | bool   | Is the Xml valid or not  |
-| Error      | string | Validation error message |
 
 ### Xml.ConvertJsonToXml
 
