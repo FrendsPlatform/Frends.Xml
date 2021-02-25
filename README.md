@@ -114,6 +114,30 @@ Create a XSLT transformation.
 #### Result
 string
 
+### Xml.Validate
+
+Validate XML against XML Schema Definitions.
+
+#### Input
+
+| Property        | Type     | Description                      |
+|-----------------|----------|----------------------------------|
+| Xml             | string   | XML to validate                  | 
+| XsdSchemas      | string[] | List of XML Schema Definitions   |
+
+#### Options
+
+| Property                 | Type             | Description                          |
+|--------------------------|------------------|--------------------------------------|
+| ThrowOnValidationErrors  | bool             | Throw exception on validation error. |
+
+#### Result
+
+| Property   | Type   | Description              |
+|------------|--------|--------------------------|
+| IsValid    | bool   | Is the Xml valid or not  |
+| Error      | string | Validation error message |
+
 ### Xml.ConvertJsonToXml
 
 This task takes JSON text and deserializes it into an xml text.
