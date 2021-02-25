@@ -125,6 +125,69 @@ Validate XML against XML Schema Definitions.
 | Xml             | string   | XML to validate                  | 
 | XsdSchemas      | string[] | List of XML Schema Definitions   |
 
+Example input Xml: 
+```xml
+<?xml version="1.0"?>
+<catalog>
+  <book id="book1">
+    <author>My favorite author</author>
+    <title>XML Developer’s Guide</title>
+    <genre>Markup</genre>
+    <price>44.95</price>
+    <publish_date>2002-09-24</publish_date>
+    <description>An in-depth look at creating applications with XML.</description>
+  </book>
+</catalog>
+````
+
+Example input XSD schema:
+```xml
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="catalog" type="catalogType"/>
+  <xs:complexType name="bookType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="author"/>
+      <xs:element type="xs:string" name="title"/>
+      <xs:element type="xs:string" name="genre"/>
+      <xs:element type="xs:float" name="price"/>
+      <xs:element type="xs:date" name="publish_date"/>
+      <xs:element type="xs:string" name="description"/>
+      </xs:sequence>
+        <xs:attribute type="xs:string" name="id"/>
+      </xs:complexType>
+      <xs:complexType name="catalogType">
+    <xs:sequence>
+      <xs:element type="bookType" name="book"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+```
+
+#### Failing example
+
+With the same XSD schema above, this XML:
+```xml
+<?xml version="1.0"?>
+<catalog>
+  <book id="book1">
+    <author>My favorite author</author>
+    <title>XML Developer’s Guide</title>
+    <genre>Markup</genre>
+    <price>44.95</price>
+    <publish_date>2002-09-24-9:00</publish_date>
+    <description>An in-depth look at creating applications with XML.</description>
+  </book>
+</catalog>
+````
+
+would return:
+
+```
+IsValid: false
+Error: The 'publish_date' element is invalid - The value '2002-09-24-9:00' is invalid according to its datatype 'http://www.w3.org/2001/XMLSchema:date' - The string '2002-09-24-9:00' is not a valid Date value.
+``` 
+
 #### Options
 
 | Property                 | Type             | Description                          |
