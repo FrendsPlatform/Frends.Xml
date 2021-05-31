@@ -157,6 +157,13 @@ namespace Frends.Xml
             builder.SchemaValidationMode = SchemaValidationMode.Lax;
 
             var xPathCompiler = proc.NewXPathCompiler();
+            if (options.XmlNamespaces != null)
+            {
+                foreach (XmlNamespace ns in options.XmlNamespaces)
+                {
+                    xPathCompiler.DeclareNamespace(ns.Prefix, ns.Uri);
+                }
+            }
 
             switch (options.XpathVersion)
             {

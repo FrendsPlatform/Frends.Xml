@@ -117,6 +117,19 @@ namespace Frends.Xml.Tests
         }
         
         [Test]
+        public void TestXPathQueryWithAdditionalNamespace()
+        {
+            const string xPath = "fn:round(/bookstore/book[@genre='novel']/price)";
+            var res = Frends.Xml.Xml.XpathQuery(new QueryInput() { Xml = Xml, XpathQuery = xPath }, new QueryOptions()
+            {
+                XmlNamespaces = new XmlNamespace[] {new XmlNamespace { Prefix = "fn", Uri = "http://www.w3.org/2005/xpath-functions" } }
+            });
+            var jTokenRes = res.ToJson();
+            Assert.That(res.Data[0], Is.EqualTo(12.0d));
+            Assert.That(((JToken)jTokenRes[0]).Value<float>(), Is.EqualTo(12.0d));
+        }
+
+        [Test]
         public void TestXsltTransform()
         {
             const string transformXml = @"<?xml version=""1.0""?>
