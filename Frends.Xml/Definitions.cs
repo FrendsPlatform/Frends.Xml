@@ -41,6 +41,11 @@ namespace Frends.Xml
         /// XPath Query language version
         /// </summary>
         public XPathVersion XpathVersion { get; set; }
+
+        /// <summary>
+        /// XML namespaces to declare
+        /// </summary>
+        public XmlNamespace[] XmlNamespaces { get; set; }
     }
 
     public class QueryResults
@@ -181,5 +186,21 @@ namespace Frends.Xml
         /// The name for the root XML element
         /// </summary>
         public string XmlRootElementName { get; set; }
+    }
+
+    /// <summary>
+    /// XML namespace
+    /// </summary>
+    public class XmlNamespace
+    {
+        /// <summary>
+        /// Namespace prefix
+        /// </summary>
+        public string Prefix { get; set; }
+
+        /// <summary>
+        /// Namespace URI
+        /// </summary>
+        public string Uri { get; set; }
     }
 }
