@@ -94,9 +94,9 @@ namespace Frends.Xml
         }
     }
 
-    public static class Extensions
+    internal static class Extensions
     {
-        public static object GetJTokenFromXdmItem(XdmItem xdmItem)
+        internal static object GetJTokenFromXdmItem(XdmItem xdmItem)
         {
             var xdmAtomicValue = xdmItem as XdmAtomicValue;
             if (xdmAtomicValue != null)
@@ -109,7 +109,7 @@ namespace Frends.Xml
             return JToken.FromObject(output);
         }
 
-        public static object GetXmlOrAtomicObject(XdmItem item)
+        internal static object GetXmlOrAtomicObject(XdmItem item)
         {
             var xdmAtomicValue = item as XdmAtomicValue;
             return xdmAtomicValue != null ? xdmAtomicValue.Value : item.ToString();
